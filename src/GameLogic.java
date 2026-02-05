@@ -41,7 +41,7 @@ public class GameLogic {
 
         if(!wereMinesGenerated){//generating mines after first click
             generateMines(x, y, z);
-            //calculateNaighboirs(x, y, z);
+            //calculateNeighbors(x, y, z);
             wereMinesGenerated = true;
         }
 
@@ -77,7 +77,7 @@ public class GameLogic {
         }
     }
 
-    public void calculateNaighboirs(){
+    public void calculateNeighbors(){
 
     }
 
@@ -90,6 +90,15 @@ public class GameLogic {
     }
 
     public void checkWin(){
-
+        for (int x = 0; x < Board.SIZE; x++) {
+            for (int y = 0; y < Board.SIZE; y++){
+                for (int z = 0; z < Board.SIZE; z++){
+                    Cell cell = board.getCell(x, y, z);
+                    if(!cell.isHasMine() || !cell.isRevealed()) return;
+                }
+            }
+        }
+        //if nothing left to reveal YOU WIN!
+        gameState = GameState.WON;
     }
 }
