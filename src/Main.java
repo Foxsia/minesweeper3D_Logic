@@ -27,10 +27,10 @@ public class Main {
             System.out.println("Layer z=" + z);
             for (int y = 0; y < Board.SIZE; y++) {
                 for (int x = 0; x < Board.SIZE; x++) {
-                    Cell c = game.getBoard().getCell(x, y, z);
-                    if (!c.isRevealed()) System.out.print("# ");
-                    else if (c.isHasMine()) System.out.print("* ");
-                    else System.out.print(c.getNeighbourMines() + " ");
+                    Cell cell = game.getBoard().getCell(x, y, z);
+                    if (!cell.isRevealed()) System.out.print("# ");
+                    else if (cell.isHasMine()) System.out.print("* ");
+                    else System.out.print(cell.getNeighbourMines() + " ");
                 }
                 System.out.println();
             }
