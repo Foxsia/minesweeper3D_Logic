@@ -52,7 +52,7 @@ public class GameLogic {
         }
 
         //floodFill(x, y, z);
-        //checkWin();
+        checkWin();
     }
 
     public void generateMines(int clickedX, int clickedY, int clickedZ){
@@ -86,7 +86,16 @@ public class GameLogic {
     }
 
     public void showAllMines(){
+        if(gameState != GameState.LOST) return;
 
+        for (int x = 0; x < Board.SIZE; x++) {
+            for (int y = 0; y < Board.SIZE; y++){
+                for (int z = 0; z < Board.SIZE; z++){
+                    Cell cell = board.getCell(x, y, z);
+                    if(cell.isHasMine()) cell.reveal();
+                }
+            }
+        }
     }
 
     public void checkWin(){
