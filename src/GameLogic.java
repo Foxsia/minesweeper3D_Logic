@@ -13,6 +13,10 @@ public class GameLogic {
         board.reset();
     }
 
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
     //getters
     public GameState getGameState(){
         return gameState;
