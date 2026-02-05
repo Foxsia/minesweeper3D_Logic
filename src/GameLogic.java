@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Stack;
 
 public class GameLogic {
     private final Board board;
@@ -41,7 +42,7 @@ public class GameLogic {
 
         if(!wereMinesGenerated){//generating mines after first click
             generateMines(x, y, z);
-            calculateNeighbors(x, y, z);
+            calculateNeighbors();
             wereMinesGenerated = true;
         }
 
@@ -51,7 +52,7 @@ public class GameLogic {
             showAllMines();
         }
 
-        //floodFill(x, y, z);
+        floodFill(x, y, z);
         checkWin();
     }
 
@@ -90,13 +91,13 @@ public class GameLogic {
 
     public int countNeighbourMines(int x, int y, int z){
         int counter = 0;
-        for (int deltax = -1; deltax <= 1; deltax++) {// delta ---> change of x
-            for (int deltay = -1; deltay <= 1; deltay++){// -1 to 1 --> 27 possible neighbours with the one clicked
-                for (int deltaz = -1; deltaz <= 1; deltaz++){
-                    if(deltax == 0 && deltay == 0 && deltaz == 0) continue; //skipping the clicked one
-                    int newX = x + deltax;
-                    int newY = y + deltay;
-                    int newZ = z + deltaz;
+        for (int deltaX = -1; deltaX <= 1; deltaX++) {// delta ---> change of x
+            for (int deltaY = -1; deltaY <= 1; deltaY++){// -1 to 1 --> 27 possible neighbours with the one clicked
+                for (int deltaZ = -1; deltaZ <= 1; deltaZ++){
+                    if(deltaX == 0 && deltaY == 0 && deltaZ == 0) continue; //skipping the clicked one
+                    int newX = x + deltaX;
+                    int newY = y + deltaY;
+                    int newZ = z + deltaZ;
                     if(board.isInBounds(newX, newY, newZ) && board.getCell(newX, newY, newZ).isHasMine()) counter++;
                 }
             }
@@ -104,7 +105,35 @@ public class GameLogic {
         return counter;
     }
 
-    public void floodFill(){
+    public void floodFill(int startX, int startY, int startZ){//if the clicked one does not have any neighbours (mines)
+        Stack<int[]> cellStack = new Stack<>();
+        cellStack.push(new int[]{startX, startY, startZ});//push the choden one
+
+        while(!cellStack.isEmpty()) {
+            int[] current = cellStack.pop();
+            int x = current[0];
+            int y = current[1];
+            int z = current[2];
+
+            if (!board.isInBounds(x, y, z)) continue;
+
+            Cell cell = board.getCell(startX, startY, startZ);
+            if (cell.isRevealed() || cell.isFlagged()) continue;
+
+            cell.reveal();
+
+            if (cell.getNeighbourMines() != 0) continue;
+
+            //pushing the next one to check
+            for (int deltaX = -1; deltaX <= 1; deltaX++) {
+                for (int deltaY = -1; deltaY <= 1; deltaY++) {
+                    for (int deltaZ = -1; deltaZ <= 1; deltaZ++) {
+                        if (deltaX != 0 && deltaY != 0 && deltaZ != 0)
+                            cellStack.push(new int[]{x + deltaX, y + deltaY, z + deltaZ});
+                    }
+                }
+            }
+        }
 
     }
 
