@@ -24,4 +24,14 @@ public class Board {
                 z >= 0 && z < SIZE;
     }
 
+    public void reset(){
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++){
+                for (int z = 0; z < SIZE; z++){
+                    board[x][y][z].reset();
+                }
+            }
+        }
+    }
+
 }
