@@ -49,6 +49,4 @@ public class Cell {
     void toggleFlag() {
         isFlagged = !isFlagged;
     }
-
-
 }
