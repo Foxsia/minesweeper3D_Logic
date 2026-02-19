@@ -121,7 +121,7 @@ public class GameLogic {
 
             if (!board.isInBounds(x, y, z)) continue;
 
-            Cell cell = board.getCell(startX, startY, startZ);
+            Cell cell = board.getCell(x, y, z);
             if (cell.isRevealed() || cell.isFlagged()) continue;
 
             cell.reveal();
@@ -163,7 +163,7 @@ public class GameLogic {
                 }
             }
         }
-        //if nothing left to reveal YOU WIN!
+        //if nothing left to reveal WIN
         gameState = GameState.WON;
     }
 
