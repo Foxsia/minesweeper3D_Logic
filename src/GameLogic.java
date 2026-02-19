@@ -159,7 +159,7 @@ public class GameLogic {
             for (int y = 0; y < Board.SIZE; y++){
                 for (int z = 0; z < Board.SIZE; z++){
                     Cell cell = board.getCell(x, y, z);
-                    if(!cell.isHasMine() || !cell.isRevealed()) return;
+                    if(!cell.isHasMine() && !cell.isRevealed()) return;
                 }
             }
         }
